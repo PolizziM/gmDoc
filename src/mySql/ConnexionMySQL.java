@@ -46,7 +46,7 @@ public class ConnexionMySQL {
 	 * @return l'objet de connexion
 	 */
 	public Connection getConnexion() {
-		if (this.proprietes.getProperty("use").equals("yes")) {
+
 			try {
 				if (this.connexion.isClosed()) {
 					this.demandeConnexion();
@@ -54,7 +54,7 @@ public class ConnexionMySQL {
 			} catch (SQLException se) {
 				System.out.println("getConnexion " + se.getMessage());
 			}
-		}
+		
 		return this.connexion;
 	}
 
@@ -63,13 +63,13 @@ public class ConnexionMySQL {
 	 *
 	 */
 	public void ferme() {
-		if (this.proprietes.getProperty("use").equals("yes")) {
+
 			try {
 				this.connexion.close();
 			} catch (SQLException e) {
 				System.out.println("Pb fermeture bdd " + e.getMessage());
 			}
-		}
+		
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class ConnexionMySQL {
 
 		String login = this.proprietes.getProperty("login");
 		String mdp = this.proprietes.getProperty("pass");
-		if (this.proprietes.getProperty("use").equals("yes")) {
+
 			try {
 
 				this.connexion = DriverManager.getConnection(url, login, mdp);
@@ -92,7 +92,7 @@ public class ConnexionMySQL {
 				e.printStackTrace();
 				System.out.println(e);
 			}
-		}
+		
 	}
 
 	/**
