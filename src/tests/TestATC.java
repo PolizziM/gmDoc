@@ -10,10 +10,8 @@ public class TestATC {
 
 	public static void main (String [] args) throws IOException {
 
-		/* User enter disease, clinical sign and side effects */
-		System.out.print("Enter your query: ");
-		Scanner sc = new Scanner(System.in);
-		String query = sc.nextLine();
+		/* Query */
+		String query = "A01AB03";
 
 		SearchInATC.parsingATC();
 		String drug = SearchInATC.searchDrugById(query);

@@ -10,13 +10,9 @@ public class TestStitch {
 	
 	public static void main (String [] args) throws IOException {
 
-		/* User enter disease, clinical sign and side effects */
-		System.out.print("Enter chemical: ");
-		Scanner sc = new Scanner(System.in);
-		String ch = sc.nextLine();
-		System.out.print("Enter alias: ");
-		Scanner sc1 = new Scanner(System.in);
-		String al = sc.nextLine();
+	
+		String ch = "CIDm00025959";
+		String al = "CIDs00025959";
 		Stitch s = new Stitch(ch,al);
 		
 		SearchInStitch.parsingStitch();

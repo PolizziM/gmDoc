@@ -1,4 +1,4 @@
-package main;
+package mehdi;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("main/MainWindow.fxml"));
         primaryStage.setTitle("gmDoc, a hypochondriac's best friend (lol)");
         primaryStage.setScene(new Scene(root, res_x, res_y));
         primaryStage.setResizable(false);

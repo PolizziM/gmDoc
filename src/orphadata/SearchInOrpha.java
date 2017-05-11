@@ -16,6 +16,8 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 
 
@@ -23,12 +25,10 @@ import java.util.HashMap;
  * Created by meh on 10/05/2017.
  */
 
-public class ConnectOrpha {
-
+public class SearchInOrpha {
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonParser jp = new JsonParser();
-
 
     private String host     = "http://couchdb.telecomnancy.univ-lorraine.fr";
     private String db       = "orphadatabase";
@@ -39,7 +39,6 @@ public class ConnectOrpha {
     public JSONObject get(String id) throws Exception {
         return new JSONObject(send("GET", this.getURL(id), null));
     }
-
     public URL getURL(String path) throws Exception {
         URL url = new URL(this.host + "/" + db + path);
         //System.out.println(url);
@@ -57,11 +56,11 @@ public class ConnectOrpha {
     public ArrayList<Disease> getDiseaseByName(String disease) throws Exception {
         String url = "/_design/diseases/_view/GetDiseasesByName";
         JSONObject myJson = get(url + "?startkey=\"" + Character.toUpperCase(disease.charAt(0)) + disease.substring(1).toLowerCase() + "\"&endkey={}");
-        System.out.println(url +"?key=\"" +Character.toUpperCase(disease.charAt(0)) + disease.substring(1).toLowerCase() +"\"");
+//        System.out.println(url +"?key=\"" +Character.toUpperCase(disease.charAt(0)) + disease.substring(1).toLowerCase() +"\"");
         JSONArray rows = myJson.getJSONArray("rows");
         ArrayList<Disease> DiseaseesOrpha = new ArrayList<Disease>();
 
-        System.out.println("rows: " + rows);
+//        System.out.println("rows: " + rows);
 
         if (rows.length() > 0) {
             for (int i = 0; i < rows.length(); i++) {
@@ -75,12 +74,32 @@ public class ConnectOrpha {
                     myDisease.setName(allValues.getJSONObject("Name").getString("text"));
 
                     //OrphaNumber
+                    int no =0;
                     myDisease.setId(allValues.getInt("OrphaNumber"));
+                    
+					//ID OMIM
+					try{
+						JSONObject externalRef = allValues.getJSONObject("ExternalReferenceList");
+						if(externalRef.getInt("count") == 1){
+							String refer = externalRef.getJSONObject("ExternalReference").getString("Source");
+							if(refer.equals("OMIM")){
+								myDisease.setId(externalRef.getJSONObject("ExternalReference").getInt("Reference"));
+							}
+						}else if (externalRef.getInt("count") > 1){
+							JSONArray externalTab = externalRef.getJSONArray("ExternalReference");
+							Boolean b = true;
+							for(int j = 0; j<externalTab.length();j++){
+								String refer = externalTab.getJSONObject(j).getString("Source");
+								if(refer.equals("OMIM") && b){
+									myDisease.setId(externalTab.getJSONObject(j).getInt("Reference"));
+								}
+							}
+						}
 
-
-                    System.out.println("saluuut");
-                    System.out.println(3);
-
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					
                     JsonElement je = jp.parse(myJson.toString());
                     String prettyJsonString = gson.toJson(je);
                     // System.out.println(prettyJsonString);
@@ -104,6 +123,37 @@ public class ConnectOrpha {
         }
         return DiseaseesOrpha;
     }
+	
+    public List<Disease> getDiseaseBySign(String sign) throws Exception{
+		String url = "/_design/clinicalsigns/_view/GetDiseaseByClinicalSign";
+		JSONObject myJson = get(url +"?startkey=\"" +sign.toLowerCase() +"\"&endkey={}&descending=false");
+		HashMap<Integer, String> matchedDiseases = new HashMap<Integer,String>();
+		ArrayList<Disease> res = new ArrayList<Disease>();
+		JSONArray rows = myJson.getJSONArray("rows");
+		if(rows.length() > 0){
+			for(int i = 0; i<rows.length(); i++){
+				JSONObject row = rows.getJSONObject(i);
+				if(row.getString("key").contains(sign)){
+					JSONObject value = row.getJSONObject("value");
+					JSONObject disease = value.getJSONObject("disease");
+					int orphaNumber = disease.getInt("OrphaNumber");
+					String diseaseName = disease.getJSONObject("Name").getString("text");
+					if(!matchedDiseases.containsValue(orphaNumber)){
+						matchedDiseases.put(orphaNumber, diseaseName);
+						Disease d = new Disease(orphaNumber, diseaseName);
+		
+						res.add(d);
+					}
+				}
+			}
+		}else{
+			System.out.println("The referenced sign doesn't match with any disease");
+		}
+//		for(Entry<Integer, String> entry : matchedDiseases.entrySet()) {
+//			System.out.println("OrphaNumber : " +entry.getKey() +"	Disease name : " +entry.getValue());
+//		}
+		return res;
+	}
 
     public void getSignByKey(int orphaNum, Disease myDisease) throws Exception {
         String url = "/_design/clinicalsigns/_view/GetDiseaseClinicalSignsNoLang";
@@ -153,9 +203,6 @@ public class ConnectOrpha {
         writer.close();
     }
 
-    /**
-     * @return response body
-     */
     protected String readBody(HttpURLConnection connection) throws Exception {
         //System.out.println("read function called");
         InputStream str = connection.getInputStream();

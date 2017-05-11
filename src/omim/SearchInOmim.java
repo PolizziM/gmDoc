@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import model.Omim;
+import model.Sign;
 
 public class SearchInOmim {
 
@@ -39,14 +40,17 @@ public class SearchInOmim {
 				}
 
 				String[] signs = fields[1].split(";");
+				for(int i = 0; i<signs.length;i++){
+					signs[i]=signs[i].trim();
+				}
 				omim.setSign(signs); // Preferred Label
 
 				String[] synonyms = fields[2].split(";");
 				omim.setSynonym(synonyms); // Synonyms
 
 				omim.setCui(fields[5]); // CUI
+				omim_list.add(omim);
 			}
-			omim_list.add(omim);
 			//System.out.println(omim);
 			cpt++;
 		}
@@ -55,20 +59,21 @@ public class SearchInOmim {
 
 	}
 
-	public static ArrayList<String> searchSynonymsInOmim(String sign) {
+	public static ArrayList<Sign> searchSynonymsInOmim(String sign) {
 		
-		ArrayList<String> synonyms = new ArrayList<String>();
+		ArrayList<Sign> synonyms = new ArrayList<Sign>();
 		for(int i=0;i<omim_list.size();i++) {
 			for(int j=0;j<omim_list.get(i).getSign().length;j++) {
-				if (omim_list.get(i).getSign()[j].equals(sign)) {
-					String synonym = omim_list.get(i).getSynonym()[j];
-					System.out.println(synonym);
-					synonyms.add(synonym);
+				//System.out.println("Sign   "+omim_list.get(i).getSign()[j]);
+				if (omim_list.get(i).getSign()[j].toLowerCase().equals(sign.toLowerCase())) {
+					System.out.println(omim_list.get(i).getSign()[j]);
+					Sign synonym = new Sign(0,omim_list.get(i).getSynonym()[j].toLowerCase());
+					//System.out.println("Synonym   "+synonym);
+					if(!synonym.getName().equals("")) {
+						synonyms.add(synonym);
+					}
 				}
 			}
-		}
-		if(synonyms.isEmpty()) {
-			System.out.println("Not any synonym");
 		}
 		return synonyms;
 	}
