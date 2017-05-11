@@ -1,10 +1,9 @@
-package orphaData;
+package orphadata;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.oracle.javafx.jmx.json.JSONReader;
 import model.Disease;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,7 +54,6 @@ public class ConnectOrpha {
         ).toASCIIString());
     }
 
-
     public ArrayList<Disease> getDiseaseByName(String disease) throws Exception {
         String url = "/_design/diseases/_view/GetDiseasesByName";
         JSONObject myJson = get(url + "?startkey=\"" + Character.toUpperCase(disease.charAt(0)) + disease.substring(1).toLowerCase() + "\"&endkey={}");
@@ -74,7 +72,7 @@ public class ConnectOrpha {
                     JSONObject allValues = global.getJSONObject("value");
 
                     //Disease name
-                    myDisease.setNom(allValues.getJSONObject("Name").getString("text"));
+                    myDisease.setName(allValues.getJSONObject("Name").getString("text"));
 
                     //OrphaNumber
                     myDisease.setId(allValues.getInt("OrphaNumber"));
@@ -107,7 +105,6 @@ public class ConnectOrpha {
         return DiseaseesOrpha;
     }
 
-
     public void getSignByKey(int orphaNum, Disease myDisease) throws Exception {
         String url = "/_design/clinicalsigns/_view/GetDiseaseClinicalSignsNoLang";
         JSONObject myJson = get(url + "?key=" + orphaNum);
@@ -132,7 +129,6 @@ public class ConnectOrpha {
             //orphaSigns.clear();
         }
     }
-
 
     protected String send(String method, URL service, JSONObject object) throws Exception{
         //System.out.println("send function called");

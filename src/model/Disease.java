@@ -5,55 +5,76 @@ import java.util.ArrayList;
 public class Disease {
 
 	private int id;
-	private String nom;
+	private String name;
 	private ArrayList<String> synonymes;
 	private ArrayList<String> signes;
-	public Disease(int id, String nom, ArrayList<String> synonymes, ArrayList<String> signes) {
+	
+	public Disease(int id, String name, ArrayList<String> synonymes, ArrayList<String> signes) {
 		super();
 		this.id = id;
-		this.nom = nom;
+		this.name = name;
 		this.synonymes = synonymes;
 		this.signes = signes;
 	}
-	public Disease(int id, String nom) {
+	
+	public Disease() {
+		this.id = 0;
+		this.name = null;
+		this.synonymes = new ArrayList<String>();
+		this.signes = new ArrayList<String>();
+	}
+	
+	public Disease(int id, String name) {
 		super();
 		this.id = id;
-		this.nom = nom;
+		this.name = name;
 	}
+	
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNom() {
-		return nom;
+	
+	public String getName() {
+		return name;
 	}
-	public void setNom(String nom) {
-		this.nom = nom;
+	
+	public void setName(String name) {
+		this.name = name;
 	}
+	
 	public ArrayList<String> getSynonymes() {
 		return synonymes;
 	}
+	
 	public void setSynonymes(ArrayList<String> synonymes) {
 		this.synonymes = synonymes;
 	}
+	
 	public void addSynonyme(String synonyme) {
 		this.synonymes.add(synonyme);
 	}
+	
 	public ArrayList<String> getSignes() {
 		return signes;
 	}
+	
 	public void setSignes(ArrayList<String> signes) {
 		this.signes = signes;
 	}
+	
 	public void addSigne(String signe) {
 		this.signes.add(signe);
 	}
+	
 	@Override
 	public String toString() {
-		return "Disease [id=" + id + ", nom=" + nom + ", synonymes=" + synonymes + ", signes=" + signes + "]";
+		return "Disease [id=" + id + ", name=" + name + ", synonymes=" + synonymes + ", signes=" + signes + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -61,6 +82,7 @@ public class Disease {
 		result = prime * result + id;
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -73,8 +95,5 @@ public class Disease {
 		if (id != other.id)
 			return false;
 		return true;
-	}
-	
-	
-	
+	}	
 }
