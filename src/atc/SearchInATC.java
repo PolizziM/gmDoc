@@ -31,7 +31,7 @@ public class SearchInATC {
 		drugs_atc = new ArrayList<ATC>();
 
 		/* Remove unecessary information at the beginning of the file */
-		for (int i=0;i<9;i++) {
+		for (int i=0;i<13;i++) {
 			br.readLine();
 		}
 		line=br.readLine();
