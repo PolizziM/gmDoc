@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.HomeController">
+   <top>
+      <ImageView fitHeight="210.0" fitWidth="247.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_CENTER">
+         <image>
+            <Image url="@../../../ressources/img/logo.png" />
+         </image>
+      </ImageView>
+   </top>
+   <center>
+      <TextField fx:id="query" prefHeight="25.0" prefWidth="659.0" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <Button mnemonicParsing="false" onAction="#search" text="🔎" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>
