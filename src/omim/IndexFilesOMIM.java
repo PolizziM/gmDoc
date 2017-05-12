@@ -104,7 +104,7 @@ public class IndexFilesOMIM {
 			writer.close();
 
 			Date end = new Date();
-			System.out.println(end.getTime() - start.getTime() + " total milliseconds");
+			//System.out.println(end.getTime() - start.getTime() + " total milliseconds");
 
 		} catch (IOException e) {
 			System.out.println(" caught a " + e.getClass() +

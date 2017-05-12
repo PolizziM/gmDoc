@@ -2,6 +2,7 @@ package application.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import application.Launcher;
 import application.MainApp;
@@ -48,6 +49,7 @@ public class HomeController {
     
     @FXML
     private void search(){
+    	Date start = new Date();
     	String sign=query.getText();
 		ObservableList<Disease> diseases = FXCollections.observableArrayList();
 		try {
@@ -73,6 +75,8 @@ public class HomeController {
     		} catch (IOException e) {
     			e.printStackTrace();
     		}
+    		Date end = new Date();
+			System.out.println("The research took "+ (end.getTime()-start.getTime()) +" ms.");
     	
     	
     }

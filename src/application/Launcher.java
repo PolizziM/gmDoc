@@ -27,38 +27,38 @@ public class Launcher extends Thread {
 	 * @throws Exception 
 	 ************************************************************/
 
-	public static void main (String [] args) throws Exception {
+	/*public static void main (String [] args) throws Exception {
 
-//		IndexFilesHPO.indexHpo();
-//		System.out.println(QueriesHPO.getSynonymsBySign(new Sign(0,"Abnormality of body height")));
+		IndexFilesHPO.indexHpo();
+		System.out.println(QueriesHPO.getSynonymsBySign(new Sign(0,"Abnormality of body height")));
 		
-//		IndexFilesOMIM.indexOmim();
-//		System.out.println(QueriesOMIM.getDiseaseBySign(new Sign(0,"Normocephaly")));
+		IndexFilesOMIM.indexOmim();
+		System.out.println(QueriesOMIM.getDiseaseBySign(new Sign(0,"Normocephaly")));
 		
-		/* User enter disease, clinical sign and side effects */
+		// User enter disease, clinical sign and side effects 
 		System.out.println("Examples of typing: 'Abnormality of coordination', 'Abnormality of digestive system', 'Iris neovascularization', etc...");
 		System.out.print("Enter your query: ");
 		Scanner sc = new Scanner(System.in);
 		myQuery = sc.nextLine();
 		mySign=new Sign(0,myQuery);
 
-		/* Parsing the documents and create the indexes */
+		// Parsing the documents and create the indexes
 		initDocuments();
 
-		/* Search for the synonyms of the sign */
+		//Search for the synonyms of the sign
 		ArrayList<Sign> allSynonyms = searchForSynonymSign(mySign);
 		//System.out.println(allSynonyms); //OK
 
-		/* Search for the drug responsible for the side effects (signs) */
-//		ArrayList<String> drugsSE= searchDrug(allSynonyms);
-//		System.out.println(drugsSE); 
+		// Search for the drug responsible for the side effects (signs)
+		ArrayList<String> drugsSE= searchDrug(allSynonyms);
+		System.out.println(drugsSE); 
 		
 		
-		/* Search for the diseases responsible for the sign */
+		// Search for the diseases responsible for the sign
 		ArrayList<Disease> diseases = searchDiseases(allSynonyms);
 		System.out.println("Diseases : "+diseases);
 
-	}
+	}*/
 
 	/**************************************************************
 	 * Function to initialize the parsing of documents and indexes

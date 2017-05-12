@@ -1,6 +1,7 @@
 package application.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import application.Launcher;
@@ -68,6 +69,7 @@ public class ResultsController {
     
     @FXML
     private void search(){
+    	Date start = new Date();
     	String sign=query.getText();
 		ObservableList<Disease> diseases = FXCollections.observableArrayList();
 		try {
@@ -78,12 +80,13 @@ public class ResultsController {
 				diseases.add(d);
 			}
 			init(diseases);
+			Date end = new Date();
+			System.out.println("The research took "+ (end.getTime()-start.getTime()) +" ms.");
 			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		System.out.println("END OF THE ROAD");
     }
 }

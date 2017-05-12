@@ -39,7 +39,7 @@ public class IndexFilesHPO {
 
         Date newDoc = new Date();
         try {
-            System.out.println("Indexing to directory '" + indexPath + "'...");
+            //System.out.println("Indexing to directory '" + indexPath + "'...");
 
 			Directory dir = FSDirectory.open(Paths.get(indexPath));
 			Analyzer analyzer = new StandardAnalyzer();
@@ -77,7 +77,7 @@ public class IndexFilesHPO {
             writer.close();
 
             Date end = new Date();
-            System.out.println(end.getTime() - newDoc.getTime() + " total milliseconds");
+           // System.out.println(end.getTime() - newDoc.getTime() + " total milliseconds");
 
         } catch (IOException e) {
             System.out.println(" caught a " + e.getClass() +
