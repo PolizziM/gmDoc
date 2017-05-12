@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 
 public class HomeController {
     @FXML
@@ -67,7 +67,7 @@ public class HomeController {
 		}
     		try {
     			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/ResultsOverview.fxml"));
-    			BorderPane ResultsOverview =loader.load();
+    			AnchorPane ResultsOverview =loader.load();
     			this.mainApp.getRootLayout().setCenter(ResultsOverview);
     			ResultsController controller = loader.getController(); 
     			controller.setMainApp(this.mainApp);

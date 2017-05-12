@@ -1,51 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ResultsController">
-   <top>
-      <BorderPane prefHeight="24.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <center>
-            <TextField fx:id="query" BorderPane.alignment="CENTER" />
-         </center>
-         <right>
-            <Button mnemonicParsing="false" onAction="#search" text="🔎" BorderPane.alignment="CENTER" />
-         </right>
-      </BorderPane>
-   </top>
-   <left>
-      <TableView fx:id="Diseases" prefHeight="475.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="nameDisease" prefWidth="200.0" text="Disease" />
-        </columns>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ResultsController">
+   <children>
+      <Button layoutX="189.0" layoutY="10.0" mnemonicParsing="false" onAction="#search" text="Go" />
+      <TextField fx:id="query" layoutX="17.0" layoutY="10.0" />
+      <TableView fx:id="TreatmentSE" layoutX="600.0" layoutY="36.0" prefHeight="446.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0">
+         <columns>
+            <TableColumn fx:id="treatse" prefWidth="200.0" text="Treatment against side effects" />
+         </columns>
       </TableView>
-   </left>
-   <center>
-      <TableView fx:id="Drugs" prefHeight="475.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="nameDrug" prefWidth="200.0" text="Drug" />
-        </columns>
+      <TableView fx:id="Treatment" layoutX="400.0" layoutY="36.0" prefHeight="446.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0">
+         <columns>
+            <TableColumn fx:id="treat" prefWidth="200.0" text="Treatment" />
+         </columns>
       </TableView>
-   </center>
-   <right>
-      <BorderPane prefHeight="275.0" prefWidth="326.0" BorderPane.alignment="CENTER">
-         <left>
-            <TableView fx:id="Treatment" prefHeight="475.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="treat" prefWidth="200.0" text="Treatment" />
-              </columns>
-            </TableView>
-         </left>
-         <right>
-            <TableView fx:id="TreatmentSE" prefHeight="275.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="treatse" prefWidth="200.0" text="Treatment against side effects" />
-              </columns>
-            </TableView>
-         </right>
-      </BorderPane>
-   </right>
-</BorderPane>
+      <TableView fx:id="Diseases" layoutY="36.0" prefHeight="446.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
+         <columns>
+            <TableColumn fx:id="nameDisease" prefWidth="200.0" text="Disease" />
+         </columns>
+      </TableView>
+      <TableView fx:id="Drugs" layoutX="200.0" layoutY="36.0" prefHeight="446.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0">
+         <columns>
+            <TableColumn fx:id="nameDrug" prefWidth="200.0" text="Drug" />
+         </columns>
+      </TableView>
+      <Text fx:id="timeText" layoutX="246.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" wrappingWidth="88.0" />
+   </children>
+</AnchorPane>

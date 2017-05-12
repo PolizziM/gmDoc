@@ -2,7 +2,6 @@ package application.view;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import application.Launcher;
 import application.MainApp;
@@ -15,13 +14,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 public class ResultsController {
+	
     private MainApp mainApp;
+    private long time;
     
     public ResultsController(){
     	
     }
+    
+    @FXML
+    private Text timeText;
     
     @FXML
     private void initialize() {
@@ -81,7 +86,9 @@ public class ResultsController {
 			}
 			init(diseases);
 			Date end = new Date();
-			System.out.println("The research took "+ (end.getTime()-start.getTime()) +" ms.");
+			time = end.getTime()-start.getTime();
+			timeText.setText(Long.toString(time)+" ms");
+			System.out.println("The research took "+ time +" ms.");
 			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

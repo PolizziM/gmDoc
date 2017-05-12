@@ -52,7 +52,7 @@ public class MainApp extends Application {
 	public void showHomeOverview() {
 		try {
 			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/HomeOverview.fxml"));
-			BorderPane HomeOverview =loader.load();
+			AnchorPane HomeOverview =loader.load();
 			rootLayout.setCenter(HomeOverview);
 			HomeController controller = loader.getController(); 
 			controller.setMainApp(this);
@@ -63,7 +63,7 @@ public class MainApp extends Application {
 	public void showResultsOverview() {
 		try {
 			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/ResultsOverview.fxml"));
-			BorderPane ResultsOverview =loader.load();
+			AnchorPane ResultsOverview =loader.load();
 			rootLayout.setCenter(ResultsOverview);
 			ResultsController controller = loader.getController(); 
 			controller.setMainApp(this);
