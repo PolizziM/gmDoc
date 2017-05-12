@@ -46,7 +46,17 @@ public class SearchInStitch {
 		br.close();
 		//System.out.println(cpt+" drugs recorded in stitch.");
 	}
+	public static String searchCodeAtcInStitch(String sider_id) {
+		sider_id=sider_id.substring(0,3)+"m"+sider_id.substring(4,12);
+		String code = null;
 
+		for(int i=0; i<stitch_list.size();i++) {
+			if(stitch_list.get(i).getId1().equals(sider_id)) {
+				code = stitch_list.get(i).getCodeATC();
+			}
+		}
+		return code;
+	}
 	public static String searchCodeAtcInStitch(Stitch stitch) {
 		
 		String chemical = stitch.getId1();

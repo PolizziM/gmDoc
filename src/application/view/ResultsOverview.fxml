@@ -15,7 +15,7 @@
             <TableColumn fx:id="treatse" prefWidth="200.0" text="Treatment against side effects" />
          </columns>
       </TableView>
-      <TableView fx:id="Treatment" layoutX="400.0" layoutY="36.0" prefHeight="446.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0">
+      <TableView fx:id="Treatment" layoutX="400.0" layoutY="36.0" onMouseClicked="#getDrugs" prefHeight="446.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0">
          <columns>
             <TableColumn fx:id="treat" prefWidth="200.0" text="Treatment" />
          </columns>

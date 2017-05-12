@@ -46,7 +46,7 @@ public class CouchDB {
 		getTotalDocumentCount();
 
 //		viewAllDocuments();
-		viewDiseaseBySign(new Sign(0,"Abnormal colour of the urine/cholic/dark urines".replaceAll(" ", "%20")));
+//		viewDiseaseBySign(new Sign(0,"Abnormal colour of the urine/cholic/dark urines".replaceAll(" ", "%20")));
 //		viewsDemo();
 
 		//        deleteDocument("6");
@@ -148,7 +148,7 @@ public class CouchDB {
 
 			}
 
-			System.out.println("Json String: " + jsonString);
+//			System.out.println("Json String: " + jsonString);
 
 			Map<String, Object> jsonMap = getMapFromJsonString(jsonString);
 
@@ -173,9 +173,15 @@ public class CouchDB {
 //						System.out.println("Value: " + row.get("value"));
 
 						int orphaNumber = Integer.parseInt(((Map)((Map)row.get("value")).get("disease")).get("OrphaNumber").toString());
-						String name = ((Map)((Map) ((Map)row.get("value")).get("disease")).get("Name") ).get("text").toString() ;
-						Disease d = new Disease(orphaNumber,name);
-						res.add(d);
+						String names = ((Map)((Map) ((Map)row.get("value")).get("disease")).get("Name") ).get("text").toString() ;
+						String[] name=names.split("/");
+						for(int k = 0;k<name.length;k++)
+						{
+							Disease d = new Disease(orphaNumber,name[k]);
+							res.add(d);
+						}
+
+
 //						System.out.println("Name: " + ((Map)((Map) ((Map)row.get("value")).get("disease")).get("Name") ).get("text")  );
 //						System.out.println("Name: " + ((Map)((Map) ((Map)row.get("value")).get("disease")).get("Name") ).get("text")  );
 //						System.out.println("_id: " + ((Map)((Map)row.get("value")).get("disease")).get("OrphaNumber"));
@@ -371,7 +377,7 @@ public class CouchDB {
 
 		Map<String, Object> jsonMap = (Map<String, Object>) JSONValue.parse(jsonString);
 
-		System.out.println("Json Map: " + jsonMap);
+//		System.out.println("Json Map: " + jsonMap);
 
 		return jsonMap;
 

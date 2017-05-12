@@ -50,13 +50,14 @@ public class Launcher extends Thread {
 		//System.out.println(allSynonyms); //OK
 
 		/* Search for the drug responsible for the side effects (signs) */
+//		System.out.println(allSynonyms);
 //		ArrayList<String> drugsSE= searchDrug(allSynonyms);
 //		System.out.println(drugsSE); 
 		
 		
 		/* Search for the diseases responsible for the sign */
-		ArrayList<Disease> diseases = searchDiseases(allSynonyms);
-		System.out.println("Diseases : "+diseases);
+//		ArrayList<Disease> diseases = searchDiseases(allSynonyms);
+//		System.out.println("Diseases : "+diseases);
 
 	}
 
@@ -80,7 +81,7 @@ public class Launcher extends Thread {
 
 	public static ArrayList<Sign> searchForSynonymSign(Sign s) throws Exception {
 		ArrayList<Sign> results = new ArrayList<Sign>();
-		results.add(mySign);
+		results.add(s);
 
 		ArrayList<Sign> synonymsOmim = SearchInOmim.searchSynonymsInOmim(s.getName());
 		ArrayList<Sign> synonymsHpo = (ArrayList<Sign>) QueriesHPO.getSynonymsBySign(s);
@@ -156,7 +157,54 @@ public class Launcher extends Thread {
 		
 		return drugs;
 	}
+	
+	/*********************************************************************
+	 * Functions to search the drug which can heal 
+	 * @return 
+	 * @throws Exception 
+	 *********************************************************************/
+	
+	public static ArrayList<String> searchTreatment(ArrayList<Sign> synonyms) {
+		ArrayList<String> codesATC = new ArrayList<String>();
+		ArrayList<String> drugs = new ArrayList<String>();
+		for(int i=0; i<synonyms.size(); i++) {
+			List<String> cui = MySqlSign.getCuiBySignsName(synonyms.get(i));
+			for(String s : cui){
+				List<String> stitches = MySqlSign.getStitchByCui(s);
+				for(int j=0;j<stitches.size();j++) {
+					//System.out.println("Stitch: "+stitches.get(j));
+					String code = SearchInStitch.searchCodeAtcInStitch(stitches.get(j));
+					//System.out.println("Code ATC: "+code);
+					if (code!=null) {
+						codesATC.add(code);
+					}
+				}
 
+			}
+			
+
+		}
+		
+		for(int k=0; k<codesATC.size(); k++) {
+			String drug = SearchInATC.searchDrugById(codesATC.get(k));
+			drugs.add(drug);
+		}
+		
+		return drugs;
+	}
+	
+	
+	
+	public static ArrayList<String> searchCui(ArrayList<Sign> synonyms) {
+		ArrayList<String> drugs = new ArrayList<String>();
+		for(int i=0; i<synonyms.size(); i++) {
+			List<String> cui = MySqlSign.getCuiBySignsName(synonyms.get(i));			
+			for(int j=0;j<cui.size();j++) {
+				drugs.add(cui.get(j));
+			}
+		}
+		return drugs;
+	}
 	/************************************************************
 	 * Function to merge two array list
 	 ************************************************************/
