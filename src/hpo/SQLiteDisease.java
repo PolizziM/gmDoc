@@ -77,7 +77,7 @@ public class SQLiteDisease{
 				while (res.next()) {
 					int id = res.getInt(1);
 					String name = res.getString(2);
-					name = name.replaceAll("^.?[0-9]* ?", "");
+					name = name.replaceAll("^.*?[0-9]* ?", "");
 					  String[] splitArray = null;
 					  splitArray = name.split(";");
 					  name=splitArray[0];
