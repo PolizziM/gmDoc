@@ -110,15 +110,14 @@ public class Launcher extends Thread {
 	public static ArrayList<Disease> searchDiseases(ArrayList<Sign> synonyms) throws Exception {
 		ArrayList<Disease> results = new ArrayList<Disease>();
 		
-//		SearchInOrpha sio = new SearchInOrpha();
 		List<Disease> tmp = new ArrayList<Disease>();
-//		List<Disease> diseasesOrpha = new ArrayList<Disease>();
 		for(Sign s : synonyms) {
 			tmp = CouchDB.viewDiseaseBySign(s);
 		}
-//		for(Disease d : tmp) {
-//			diseasesOrpha = sio.getDiseaseByName(d.getName());
-//		}
+		for(Sign s : synonyms) {
+			tmp = QueriesOMIM.getDiseaseBySign(s);
+			results = concateDisease(results,tmp);
+		}
 //		results = concateDisease(results,diseasesOrpha);
 		for(Sign s : synonyms) {
 			tmp = SQLiteDisease.getDiseasesBySign(s);
@@ -167,8 +166,9 @@ public class Launcher extends Thread {
 	public static ArrayList<String> searchTreatment(ArrayList<Sign> synonyms) {
 		ArrayList<String> codesATC = new ArrayList<String>();
 		ArrayList<String> drugs = new ArrayList<String>();
-		for(int i=0; i<synonyms.size(); i++) {
+		for(int i=0; i < synonyms.size(); i++) {
 			List<String> cui = MySqlSign.getCuiBySignsName(synonyms.get(i));
+
 			for(String s : cui){
 				List<String> stitches = MySqlSign.getStitchByCui(s);
 				for(int j=0;j<stitches.size();j++) {

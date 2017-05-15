@@ -94,7 +94,6 @@ public class MySqlSign {
 		} catch (SQLException sqle) {
 			System.out.println("Pb dans select Stitches By cui" + sqle.getMessage());
 		}
-		System.out.println(liste);
 		return liste;
 	}
 	
@@ -119,7 +118,6 @@ public class MySqlSign {
 		} catch (SQLException sqle) {
 			System.out.println("Pb dans select Stitch by cui " + sqle.getMessage());
 		}
-		System.out.println(liste);
 		return liste;
 	}
 	

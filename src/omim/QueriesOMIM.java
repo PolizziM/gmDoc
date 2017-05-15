@@ -126,7 +126,7 @@ public class QueriesOMIM {
 
 			end = Math.min(hits.length, start + hitsPerPage);
 
-			for (int i = start; i < numTotalHits; i++) {
+			for (int i = start; i < end; i++) {
 				if (raw) {                              // output raw format
 					System.out.println("doc="+hits[i].doc+" score="+hits[i].score);
 					continue;

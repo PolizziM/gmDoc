@@ -1,4 +1,4 @@
-package orphadata;
+package couchDB;
 
 import java.io.BufferedReader;
 
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import java.util.Map;
@@ -40,10 +40,26 @@ public class CouchDB {
 
 	static Database db;
 
-	public static void connect(){
-		String dbName 	= "orphadatabase";
+	public static void main(String[] args) {
 
-		dbSession 		= new Session("couchdb.telecomnancy.univ-lorraine.fr", 80,"ho9u","CouchDB2A");
+		connect();
+		getTotalDocumentCount();
+
+//		viewAllDocuments();
+		viewDiseaseBySign(new Sign(0,"Abnormal colour of the urine/cholic/dark urines".replaceAll(" ", "%20")));
+//		viewsDemo();
+
+		//        deleteDocument("6");
+
+		//        getTotalDocumentCount();
+
+		//        deleteDatabase(dbName);
+
+	}
+	public static void connect(){
+		String dbName = "orphadatabase";
+
+		dbSession = new Session("couchdb.telecomnancy.univ-lorraine.fr", 80,"ho9u","CouchDB2A");
 		db=dbSession.getDatabase(dbName);
 	}
 
@@ -91,8 +107,7 @@ public class CouchDB {
 	}
 
 
-	public static List<Disease> viewDiseaseBySign(Sign s){
-		List<Disease> res = new ArrayList<Disease>();
+	public static void viewDiseaseBySign(Sign s){
 		Document doc = null;
 
 		try {
@@ -106,11 +121,9 @@ public class CouchDB {
 		}
 		try {
 
-
-
 			DefaultHttpClient httpclient = new DefaultHttpClient();
 
-			HttpGet get = new HttpGet("http://couchdb.telecomnancy.univ-lorraine.fr:80/orphadatabase/_design/clinicalsigns/_view/GetDiseaseByClinicalSign?key=%22"+s.getName().replaceAll(" ", "%20")+"%22");
+			HttpGet get = new HttpGet("http://couchdb.telecomnancy.univ-lorraine.fr:80/orphadatabase/_design/clinicalsigns/_view/GetDiseaseByClinicalSign?key=%22"+s.getName()+"%22");
 
 			HttpResponse response = httpclient.execute(get);
 
@@ -124,24 +137,54 @@ public class CouchDB {
 
 			String jsonString = "" ;
 
-			while( (strdata =reader.readLine())!=null){
+			while( (strdata =reader.readLine())!=null)
+
+			{
+
+				                   System.out.println(strdata);
 
 				jsonString += strdata;
+
 			}
+
+			System.out.println("Json String: " + jsonString);
+
 			Map<String, Object> jsonMap = getMapFromJsonString(jsonString);
 
-			if(jsonMap!=null){
+			if(jsonMap!=null)
+
+			{
+
+				System.out.println("total_rows: " + jsonMap.get("total_rows"));
+
+				System.out.println("offset: " + jsonMap.get("offset"));
+
 				List<Map> rowsList = (List<Map>) jsonMap.get("rows");
 
-				if(rowsList!=null){
-					for(Map row: rowsList){
-						int orphaNumber = Integer.parseInt(((Map)((Map)row.get("value")).get("disease")).get("OrphaNumber").toString());
-						String names = ((Map)((Map) ((Map)row.get("value")).get("disease")).get("Name") ).get("text").toString() ;
-						String[] name=names.split("/");
-						for(int k = 0;k<name.length;k++){
-							Disease d = new Disease(orphaNumber,name[k]);
-							res.add(d);
-						}
+				if(rowsList!=null)
+
+				{
+
+					for(Map row: rowsList)
+
+					{
+
+						System.out.println("----------------");
+
+//						System.out.println("Value: " + row.get("value"));
+
+//						System.out.println("Name: " + ((Map)row.get("value")).get("Name"));
+
+//						System.out.println("_id: " + ((Map)row.get("value")).get("_id"));
+//
+//						System.out.println("Language: " + ((Map)row.get("value")).get("Language"));
+//
+//						System.out.println("EmpNO: " + ((Map)row.get("value")).get("EmpNO"));
+//
+//						System.out.println("Designation: " + ((Map)row.get("value")).get("Designation"));
+//
+//						System.out.println("Group: " + ((Map)row.get("value")).get("Group"));
+
 					}
 
 				}
@@ -162,13 +205,8 @@ public class CouchDB {
 
 			e.printStackTrace();
 
-		}
-
-		return res;
-
+		}  
 	}
-
-
 	public static void viewAllDocuments(){
 
 		ViewResults results = db.getAllDocuments();
@@ -235,27 +273,27 @@ public class CouchDB {
 
 		try {
 
-			DefaultHttpClient 	httpclient 		= new DefaultHttpClient();
+			DefaultHttpClient httpclient = new DefaultHttpClient();
 
-			HttpGet 			get 			= new HttpGet("http://localhost:5984/foodb/_design/couchview/_view/javalanguage");
+			HttpGet get = new HttpGet("http://localhost:5984/foodb/_design/couchview/_view/javalanguage");
 
-			HttpResponse 		response 		= httpclient.execute(get);
+			HttpResponse response = httpclient.execute(get);
 
-			HttpEntity 			entity			= response.getEntity();
+			HttpEntity entity=response.getEntity();
 
-			InputStream 		instream 		= entity.getContent();
+			InputStream instream = entity.getContent();
 
-			BufferedReader 		reader 			= new BufferedReader(new InputStreamReader(instream));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
 
-			String 				strdata 		= null;
+			String strdata = null;
 
-			String 				jsonString 		= "";
+			String jsonString = "" ;
 
-			while( (strdata =reader.readLine()) != null)
+			while( (strdata =reader.readLine())!=null)
 
 			{
 
-				// System.out.println(strdata);
+				//                   System.out.println(strdata);
 
 				jsonString += strdata;
 
@@ -329,7 +367,7 @@ public class CouchDB {
 
 		Map<String, Object> jsonMap = (Map<String, Object>) JSONValue.parse(jsonString);
 
-		//		System.out.println("Json Map: " + jsonMap);
+		System.out.println("Json Map: " + jsonMap);
 
 		return jsonMap;
 

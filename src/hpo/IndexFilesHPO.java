@@ -160,16 +160,16 @@ public class IndexFilesHPO {
                             //System.out.println("\nid:" +id);
                         }
 
-                        if(line.startsWith("name")) {
+                        if(line.startsWith("name:")) {
                             String str = "";
-
-                            if(line.matches("^.*: "))
-                                break;
-                            else {
-                                str += line + " ";
+                            str=line.substring(6);
+//                            if(line.matches("^.*: "))
+//                                break;
+//                            else {
+//                                str += line + " ";
                                 doc.add(new TextField("name", str, Field.Store.YES));
                                 //System.out.println("\nname: " + str.substring(6) + "\n");
-                            }
+//                            }
                         }
 
                         int i = 0;
